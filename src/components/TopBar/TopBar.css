@@ -1,0 +1,26 @@
+.top-bar {
+    width: 100vw;
+    background-color: aliceblue;
+    overflow: hidden;
+    z-index: 30;
+}
+
+.top-bar a {
+    color: black;
+    padding: 14px 16px;
+    text-decoration: none;
+    user-select: none; /* no text selection */
+    cursor: pointer;
+}
+
+.top-bar a:hover {
+    background-color: aqua;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}

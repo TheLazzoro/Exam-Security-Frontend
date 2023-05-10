@@ -1,0 +1,17 @@
+.login-form {
+  padding-top: 100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.login-form input {
+    margin: 10px;
+}
+
+.login-form button {
+    margin: 10px;
+}
+
+.login-form hr {
+    width: 300px;
+}
