@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import facade from '../../facades/userFacade';
 import './Login.css'
 
 const Login = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onTypeUser = (evt) => {
     const newUser = evt.target.value;
@@ -17,10 +19,12 @@ const Login = () => {
   };
 
   const onLogin = () => {
-    const user = {
-      username: user,
-      password: pass
-    }
+    setErrorMsg("");
+    facade.login(user, pass).then(res => {
+
+    }).catch(e => {
+      setErrorMsg("Login failed");
+    });
   };
 
   return (
@@ -34,8 +38,9 @@ const Login = () => {
       <div>
         <button onClick={onLogin}>Login</button>
       </div>
+      <label>{errorMsg}</label>
       <hr/>
-      <Link>Register Account</Link>
+      <Link to='/Register'>Register Account</Link>
     </div>
   )
 }

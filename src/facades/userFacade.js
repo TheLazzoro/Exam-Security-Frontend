@@ -46,9 +46,9 @@ function userFacade() {
 			});
 	};
 
-	const isTokenValid = () => {
+	const isTokenValid_user = () => {
 		const options = makeOptions("GET", true); //True add's the token
-		return fetch(BASE_URL + "/api/info/admin", options);
+		return fetch(BASE_URL + "/api/info/user", options);
 	}
 
 	const adminExists = () => {
@@ -98,7 +98,7 @@ function userFacade() {
 		getRoles,
 		getName,
 		loggedIn,
-		isTokenValid,
+		isTokenValid_user,
 		login,
 		logout,
 		adminExists,
