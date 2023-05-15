@@ -1,0 +1,15 @@
+.home {
+    left: 0px;
+    right: 0px;
+}
+
+.home-box {
+    width: 800px;
+    margin: auto;
+}
+
+.btn-create-thread {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: right;
+}

@@ -18,7 +18,7 @@ function userFacade() {
 	};
 
 	const getRoles = () => {
-		return jwt(getToken()).roles;
+		return jwt(getToken()).role;
 	}
 
 	const getName = () => {
@@ -39,16 +39,16 @@ function userFacade() {
 			username: user,
 			password: password,
 		});
-		return fetch(BASE_URL + "/api/login", options)
+		return fetch(BASE_URL + "/Login", options)
 			.then(handleHttpErrors)
 			.then((res) => {
 				setToken(res.token);
 			});
 	};
 
-	const isTokenValid_user = () => {
+	const isTokenValid = () => {
 		const options = makeOptions("GET", true); //True add's the token
-		return fetch(BASE_URL + "/api/info/user", options);
+		return fetch(BASE_URL + "/User", options);
 	}
 
 	const adminExists = () => {
@@ -58,10 +58,10 @@ function userFacade() {
 
 	const createUser = (user, password) => {
 		const options = makeOptions("POST", true, {
-			username: user,
-			password: password,
+			Username: user,
+			Password: password,
 		});
-		return fetch(BASE_URL + "/api/create-user", options)
+		return fetch(BASE_URL + "/User", options)
 			.then(handleHttpErrors);
 	}
 
@@ -84,7 +84,8 @@ function userFacade() {
 			},
 		};
 		if (addToken && loggedIn()) {
-			opts.headers["x-access-token"] = getToken();
+			const token = getToken();
+			opts.headers["Authorization"] = 'Bearer ' + token;
 		}
 		if (body) {
 			opts.body = JSON.stringify(body);
@@ -98,7 +99,7 @@ function userFacade() {
 		getRoles,
 		getName,
 		loggedIn,
-		isTokenValid_user,
+		isTokenValid,
 		login,
 		logout,
 		adminExists,

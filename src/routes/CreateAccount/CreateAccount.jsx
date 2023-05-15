@@ -6,7 +6,8 @@ const CreateAccount = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [pass_rep, setPass_rep] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
+  const [msgColor, setMsgColor] = useState("");
 
   const typeUser = (evt) => {
     const value = evt.target.value;
@@ -22,21 +23,23 @@ const CreateAccount = () => {
   };
 
   const onRegister = () => {
-    setErrorMsg("");
-    if(user.length == 0) {
-      setErrorMsg("Please choose a username");
+    setMsg("");
+    if (user.length == 0) {
+      setMsg("Please choose a username");
       return;
     }
-    if(pass != pass_rep) {
-      setErrorMsg("Passwords do not match");
+    if (pass != pass_rep) {
+      setMsg("Passwords do not match");
       return;
     }
 
     facade.createUser(user, pass).then(res => {
-
+      setMsg(res.message);
+      setMsgColor("#3a3");
     }).catch(e => {
       e.fullError.then(ex => {
-        setErrorMsg(ex.message);
+        setMsg(ex.Message);
+        setMsgColor("#f33");
       });
     });
   };
@@ -60,7 +63,7 @@ const CreateAccount = () => {
           <button onClick={onRegister}>Register</button>
         </div>
         <div>
-          <label className='error'>{errorMsg}</label>
+          <label style={{ color: msgColor }}>{msg}</label>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import facade from '../../facades/userFacade';
 import './Login.css'
 
@@ -7,6 +7,7 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const onTypeUser = (evt) => {
     const newUser = evt.target.value;
@@ -18,10 +19,15 @@ const Login = () => {
     setPass(newPass);
   };
 
+  const onKeyDown = (evt) => {
+    if (evt.key === "Enter")
+    onLogin();
+  }
+
   const onLogin = () => {
     setErrorMsg("");
     facade.login(user, pass).then(res => {
-
+      navigate("/");
     }).catch(e => {
       setErrorMsg("Login failed");
     });
@@ -30,10 +36,10 @@ const Login = () => {
   return (
     <div className='login-form'>
       <div>
-        <input placeholder='Username' onChange={onTypeUser}></input>
+        <input placeholder='Username' onChange={onTypeUser} onKeyDown={onKeyDown}></input>
       </div>
       <div>
-        <input placeholder='Password' type="password" onChange={onTypePass} ></input>
+        <input placeholder='Password' type="password" onChange={onTypePass} onKeyDown={onKeyDown}></input>
       </div>
       <div>
         <button onClick={onLogin}>Login</button>
