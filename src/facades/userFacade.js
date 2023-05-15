@@ -65,6 +65,13 @@ function userFacade() {
 			.then(handleHttpErrors);
 	}
 
+	const uploadImage = (image) => {
+		const options = makeOptions_FormData("POST", true, image);
+		console.log(options);
+		return fetch(BASE_URL + "/User/Image-Upload", options)
+			.then(handleHttpErrors);
+	}
+
 	const fetchData = () => {
 		const options = makeOptions("GET", true); //True add's the token
 
@@ -92,6 +99,23 @@ function userFacade() {
 		}
 		return opts;
 	};
+	const makeOptions_FormData = (method, addToken, file) => {
+		const formdata = new FormData();
+			formdata.append("file", file)
+		var opts = {
+			method: method,
+			headers: {
+				Accept: "application/json",
+			},
+			body : formdata
+		};
+		if (addToken && loggedIn()) {
+			const token = getToken();
+			opts.headers["Authorization"] = 'Bearer ' + token;
+		}
+		
+		return opts;
+	};
 	return {
 		makeOptions,
 		setToken,
@@ -104,6 +128,7 @@ function userFacade() {
 		logout,
 		adminExists,
 		createUser,
+		uploadImage,
 		fetchData,
 	};
 }
