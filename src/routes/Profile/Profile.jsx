@@ -5,6 +5,16 @@ import './Profile.css'
 const Profile = () => {
   const [username, setUsername] = useState("");
   const [file, setFile] = useState();
+  const [profileImg, setProfileImg] = useState([]);
+
+  // get image
+  async function refreshImage() {
+    const image = await facade.getUserImage(1); // TODO: Hardcoded user id
+    const imageObject = URL.createObjectURL(image);
+    setProfileImg(imageObject);
+    console.log(image);
+    console.log(imageObject);
+  }
 
   useEffect(() => {
     if (facade.getToken() != null) {
@@ -16,6 +26,9 @@ const Profile = () => {
         setUsername(username);
       }
     }
+
+    refreshImage();
+
   }, []);
 
   const handleFileChange = (evt) => {
@@ -27,12 +40,13 @@ const Profile = () => {
   }
 
   const uploadImage = async (evt) => {
-    if(!file) {
+    if (!file) {
       return;
     }
 
     console.log(file)
     await facade.uploadImage(file).then(res => {
+      refreshImage();
       console.log(res);
     }).catch(ex => {
       console.log(ex);
@@ -44,17 +58,17 @@ const Profile = () => {
 
   return (
     <div className='profile-container'>
-      <img className='profile-img' src='https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg?w=1380&t=st=1684156229~exp=1684156829~hmac=29b231cca08e694c33aa854db4c3d4e499f6f5dab509f4d58036788f822cd065' />
+      <img className='profile-img' src={profileImg} />
       <div>
         <div>
           <label className='lbl-username'>{username}</label>
         </div>
-        <br/>
+        <br />
         <div>
           <label>Change Image</label>
           <div>
-          <input type="file" id="myFile" name="filename" onChange={handleFileChange} />
-          <button onClick={uploadImage} >Upload</button>
+            <input type="file" id="myFile" name="filename" onChange={handleFileChange} />
+            <button onClick={uploadImage} >Upload</button>
           </div>
         </div>
       </div>

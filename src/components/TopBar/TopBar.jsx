@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import facade from '../../facades/userFacade'
 import './TopBar.css'
 import logo from '/src/assets/react.svg'
@@ -7,6 +7,7 @@ import logo from '/src/assets/react.svg'
 const TopBar = () => {
   const [usernameDisplay, setUsernameDisplay] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fires every time a route change happens.
@@ -15,6 +16,7 @@ const TopBar = () => {
       const username = facade.getName();
       if (!username) {
         setUsernameDisplay("");
+        navigate("/");
       }
       else {
         setUsernameDisplay(username);

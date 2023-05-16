@@ -56,6 +56,11 @@ function userFacade() {
 		return fetch(BASE_URL + "/api/info/all", options).then(handleHttpErrors);
 	}
 
+	const getUserImage = async (id) => {
+		const response = await fetch(BASE_URL + "/User/Image-Get/" + id);
+		return response.blob();
+	}
+
 	const createUser = (user, password) => {
 		const options = makeOptions("POST", true, {
 			Username: user,
@@ -129,6 +134,7 @@ function userFacade() {
 		adminExists,
 		createUser,
 		uploadImage,
+		getUserImage,
 		fetchData,
 	};
 }
