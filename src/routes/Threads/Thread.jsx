@@ -20,7 +20,7 @@ const Thread = () => {
       console.log(res);
       setPosts(res);
     });
-  }, []);
+  }, [refresh]);
 
   const onWriteReply = (evt) => {
     const text = evt.target.value;
@@ -30,9 +30,9 @@ const Thread = () => {
   const postReply = async () => {
     console.log(replytext)
     await facade.createPost(threadId, replytext).then(res => {
-      setRefresh(!refresh);
+    document.getElementById('replyArea').value = "";
+    setRefresh(!refresh);
     }).catch(ex => {
-      
       console.log(ex);
     })
 
@@ -50,7 +50,7 @@ const Thread = () => {
                   <ThreadPost post={el} />
                 )
             }
-            <textarea onChange={onWriteReply} className='thread-textbox-new'/>
+            <textarea id='replyArea' onChange={onWriteReply} className='thread-textbox-new'/>
             <button onClick={postReply}>Post Reply</button>
           </div>
       }

@@ -5,6 +5,9 @@
 .post-content {
     display: flex;
     width: auto;
+}
+
+.post-content-outer {
     border: 1px solid #ccc;
     margin-bottom: 5px;
 }
@@ -34,4 +37,8 @@
     font-family: inherit;
     font-size: inherit;
     resize: none;
+}
+
+.delete-post {
+    cursor: pointer;
 }

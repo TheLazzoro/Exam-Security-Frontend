@@ -43,6 +43,11 @@ function threadFacade() {
 		return fetch(BASE_URL + "/ForumThreadPost", options);
 	}
 
+	const deletePost = (postId) => {
+		const options = makeOptions("DELETE", true);
+		return fetch(BASE_URL + "/ForumThreadPost/" + postId, options);
+	}
+
 	const fetchData = () => {
 		const options = makeOptions("GET", true); //True add's the token
 
@@ -75,6 +80,7 @@ function threadFacade() {
 		getAllThreads,
 		createThread,
 		createPost,
+		deletePost,
 		getThreadById,
 		getPostsByThreadId,
 		fetchData,
