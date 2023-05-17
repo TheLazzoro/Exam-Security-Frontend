@@ -57,8 +57,13 @@ function userFacade() {
 	}
 
 	const getUserImage = async (id) => {
-		const response = await fetch(BASE_URL + "/User/Image-Get/" + id);
-		return response.blob();
+		const options = makeOptions("GET");
+		return fetch(BASE_URL + "/User/Image-Get/" + id, options).then(handleHttpErrors);
+	}
+
+	const getUserImage_ByUsername = async (username) => {
+		const options = makeOptions("GET");
+		return fetch(BASE_URL + "/User/Image-Get-By-Username/" + username, options).then(handleHttpErrors);
 	}
 
 	const createUser = (user, password) => {
@@ -72,7 +77,6 @@ function userFacade() {
 
 	const uploadImage = (image) => {
 		const options = makeOptions_FormData("POST", true, image);
-		console.log(options);
 		return fetch(BASE_URL + "/User/Image-Upload", options)
 			.then(handleHttpErrors);
 	}
@@ -135,6 +139,7 @@ function userFacade() {
 		createUser,
 		uploadImage,
 		getUserImage,
+		getUserImage_ByUsername,
 		fetchData,
 	};
 }

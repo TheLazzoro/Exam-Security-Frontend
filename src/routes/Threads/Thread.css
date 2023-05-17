@@ -1,0 +1,16 @@
+.thread-box {
+  max-width: 800px;
+  width: 100vw;
+  margin: auto;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+
+}
+
+.thread-textbox-new {
+  width: 99.4%;
+  height: 100px;
+  resize: vertical;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

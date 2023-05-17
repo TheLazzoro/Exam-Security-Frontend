@@ -1,0 +1,37 @@
+.thread-title {
+    font-size: 24px;
+}
+
+.post-content {
+    display: flex;
+    width: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.post-author {
+    width: 200px;
+}
+
+.post-author-img {
+    margin-top: 10px;
+    margin-left: 20px;
+
+    width: 96px;
+    height: 96px;
+}
+
+.post-author-name {
+    margin-left: 20px;
+}
+
+.post-text-box {
+    width: auto;
+    height: 200px;
+    width: 100%;
+
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: inherit;
+    resize: none;
+}

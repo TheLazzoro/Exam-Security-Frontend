@@ -8,33 +8,25 @@ const Profile = () => {
   const [profileImg, setProfileImg] = useState([]);
 
   // get image
-  async function refreshImage() {
-    const image = await facade.getUserImage(1); // TODO: Hardcoded user id
-    const imageObject = URL.createObjectURL(image);
-    setProfileImg(imageObject);
-    console.log(image);
-    console.log(imageObject);
+  async function refreshImage(username) {
+    await facade.getUserImage_ByUsername(username).then(res => {
+      const image = res.message;
+      setProfileImg(image);
+    });
   }
 
   useEffect(() => {
-    if (facade.getToken() != null) {
+    if (facade.getToken()) {
       const username = facade.getName();
-      if (!username) {
-        setUsername("");
-      }
-      else {
-        setUsername(username);
-      }
+      setUsername(username);
+      refreshImage(username);
     }
-
-    refreshImage();
 
   }, []);
 
   const handleFileChange = (evt) => {
     if (evt.target.files) {
       const selectedFile = evt.target.files[0];
-      console.log(selectedFile);
       setFile(selectedFile);
     }
   }
@@ -44,10 +36,8 @@ const Profile = () => {
       return;
     }
 
-    console.log(file)
     await facade.uploadImage(file).then(res => {
-      refreshImage();
-      console.log(res);
+      refreshImage(username);
     }).catch(ex => {
       console.log(ex);
       ex.fullError.then(e => {

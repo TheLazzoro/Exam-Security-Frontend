@@ -4,7 +4,8 @@
 }
 
 .home-box {
-    width: 800px;
+    max-width: 800px;
+    width: 100vw;
     margin: auto;
 }
 
@@ -13,3 +14,56 @@
     margin-bottom: 10px;
     text-align: right;
 }
+
+.btn-create-thread:disabled {
+    cursor: auto;
+    border: #888;
+}
+
+.btn-create-thread:disabled:hover {
+    background-color: #fff;
+}
+
+/* The Modal (background) */
+.modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 150px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+  }
+
+  /* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80vw;
+    min-height: 50vh;
+  }
+
+  .text-area {
+    margin-top: 10px;
+    width: 80vw;
+    height: 300px;
+    resize: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .btn-close {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+  }
+
+  .btn-close:hover {
+    background-color: #888;
+  }

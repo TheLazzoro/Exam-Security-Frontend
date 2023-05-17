@@ -1,4 +1,5 @@
 import { BASE_URL } from "../Constants";
+import userFacade from './userFacade';
 import jwt from 'jwt-decode'
 
 function handleHttpErrors(res) {
@@ -15,13 +16,31 @@ function threadFacade() {
 		return fetch(BASE_URL + "/ForumThread", options).then(handleHttpErrors);
 	}
 
-	const createUser = (user, password) => {
+	const getThreadById = (id) => {
+		const options = makeOptions("GET", false);
+		return fetch(BASE_URL + "/ForumThread/" + id, options).then(handleHttpErrors);
+	}
+
+	const getPostsByThreadId = (id) => {
+		const options = makeOptions("GET", false);
+		return fetch(BASE_URL + "/ForumThreadPost/Thread/" + id, options).then(handleHttpErrors);
+	}
+
+	const createThread = (title, content) => {
 		const options = makeOptions("POST", true, {
-			Username: user,
-			Password: password,
+			Title: title,
+			Content: content,
 		});
-		return fetch(BASE_URL + "/User", options)
-			.then(handleHttpErrors);
+		return fetch(BASE_URL + "/ForumThread", options);
+	}
+
+	const createPost = (threadId, content) => {
+		const post = {
+			Content: content,
+			ThreadId: threadId,
+		};
+		const options = makeOptions("POST", true, post);
+		return fetch(BASE_URL + "/ForumThreadPost", options);
 	}
 
 	const fetchData = () => {
@@ -42,8 +61,9 @@ function threadFacade() {
 				Accept: "application/json",
 			},
 		};
-		if (addToken && loggedIn()) {
-			opts.headers["x-access-token"] = getToken();
+		if (addToken && userFacade.loggedIn()) {
+			const token = userFacade.getToken();
+			opts.headers["Authorization"] = 'Bearer ' + token;
 		}
 		if (body) {
 			opts.body = JSON.stringify(body);
@@ -53,7 +73,10 @@ function threadFacade() {
 	return {
 		makeOptions,
 		getAllThreads,
-		createUser,
+		createThread,
+		createPost,
+		getThreadById,
+		getPostsByThreadId,
 		fetchData,
 	};
 }
