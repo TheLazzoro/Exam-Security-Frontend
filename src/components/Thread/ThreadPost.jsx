@@ -14,7 +14,9 @@ const ThreadPost = ({ post }) => {
 
   const onDeletePost = () => {
     threadFacade.deletePost(post.id).then(res => {
-      window.location.reload();
+      if(res.status == 200) {
+        window.location.reload();
+      }
     }).catch(e => {
       console.log(e.message);
     })
