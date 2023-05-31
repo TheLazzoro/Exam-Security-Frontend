@@ -6,6 +6,7 @@ import './Login.css'
 const Login = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [captcha, setCaptcha] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [captchaImg, setCaptchaImg] = useState(null);
   const navigate = useNavigate();
@@ -20,21 +21,32 @@ const Login = () => {
     setPass(newPass);
   };
 
+  const onTypeCaptcha = (evt) => {
+    const captcha = evt.target.value;
+    setCaptcha(captcha);
+  };
+
   const onKeyDown = (evt) => {
     if (evt.key === "Enter")
       onLogin();
   }
 
   const onLogin = () => {
+    let capcthaInput = undefined;
+    if(captcha) {
+      capcthaInput = captcha;
+    }
+
     setErrorMsg("");
-    setCaptchaImg(null);
-    facade.login(user, pass).then(res => {
+    facade.login(user, pass, capcthaInput).then(res => {
       navigate("/");
     }).catch(e => {
       setErrorMsg("Login failed");
       e.fullError.then(ex => {
         const image = ex.Message; // Base64 encoded image
-        setCaptchaImg("data:image/jpg;base64," + image);
+        if(image != undefined) {
+          setCaptchaImg("data:image/jpg;base64," + image);
+        }
       });
     });
   };
@@ -56,7 +68,7 @@ const Login = () => {
           !captchaImg ? null :
             <div>
               <img src={captchaImg} />
-              <input placeholder='Enter CAPTCHA code'/>
+              <input placeholder='Enter CAPTCHA code' onChange={onTypeCaptcha} onKeyDown={onKeyDown}/>
             </div>
         }
       </div>

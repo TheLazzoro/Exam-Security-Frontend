@@ -34,10 +34,11 @@ function userFacade() {
 		localStorage.removeItem("jwtToken");
 	};
 
-	const login = (user, password) => {
+	const login = (user, password, captcha) => {
 		const options = makeOptions("POST", true, {
 			username: user,
 			password: password,
+			captcha: captcha,
 		});
 		return fetch(BASE_URL + "/Login", options)
 			.then(handleHttpErrors)
