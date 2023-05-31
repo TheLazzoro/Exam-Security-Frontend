@@ -7,6 +7,7 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [captchaImg, setCaptchaImg] = useState(null);
   const navigate = useNavigate();
 
   const onTypeUser = (evt) => {
@@ -21,15 +22,20 @@ const Login = () => {
 
   const onKeyDown = (evt) => {
     if (evt.key === "Enter")
-    onLogin();
+      onLogin();
   }
 
   const onLogin = () => {
     setErrorMsg("");
+    setCaptchaImg(null);
     facade.login(user, pass).then(res => {
       navigate("/");
     }).catch(e => {
       setErrorMsg("Login failed");
+      e.fullError.then(ex => {
+        const image = ex.Message; // Base64 encoded image
+        setCaptchaImg("data:image/jpg;base64," + image);
+      });
     });
   };
 
@@ -45,7 +51,16 @@ const Login = () => {
         <button onClick={onLogin}>Login</button>
       </div>
       <label>{errorMsg}</label>
-      <hr/>
+      <div>
+        {
+          !captchaImg ? null :
+            <div>
+              <img src={captchaImg} />
+              <input placeholder='Enter CAPTCHA code'/>
+            </div>
+        }
+      </div>
+      <hr />
       <Link to='/Register'>Register Account</Link>
     </div>
   )

@@ -10,10 +10,10 @@ const App = () => {
     async function checkLogin() {
       await userFacade.isTokenValid().then(res => {
         if(res.status != 200) {
-          userFacade.logout();
+          //userFacade.logout();
         }
       }).catch(ex => {
-        userFacade.logout();
+        //userFacade.logout();
       });
       
     }
