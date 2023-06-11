@@ -33,7 +33,7 @@ const Login = () => {
 
   const onLogin = () => {
     let capcthaInput = undefined;
-    if(captcha) {
+    if (captcha) {
       capcthaInput = captcha;
     }
 
@@ -43,8 +43,9 @@ const Login = () => {
     }).catch(e => {
       setErrorMsg("Login failed");
       e.fullError.then(ex => {
-        const image = ex.Message; // Base64 encoded image
-        if(image != undefined) {
+        const image = ex.captcha; // Base64 encoded image
+        console.log(ex);
+        if (image != undefined) {
           setCaptchaImg("data:image/jpg;base64," + image);
         }
       });
@@ -63,12 +64,20 @@ const Login = () => {
         <button onClick={onLogin}>Login</button>
       </div>
       <label>{errorMsg}</label>
+      <br />
+      <br />
       <div>
         {
           !captchaImg ? null :
             <div>
-              <img src={captchaImg} />
-              <input placeholder='Enter CAPTCHA code' onChange={onTypeCaptcha} onKeyDown={onKeyDown}/>
+              <div>
+
+                <img src={captchaImg} />
+                <div>
+                  <label>Type the text displayed above</label>
+                </div>
+              </div>
+              <input style={{ width:"220px" }} onChange={onTypeCaptcha} onKeyDown={onKeyDown} />
             </div>
         }
       </div>
