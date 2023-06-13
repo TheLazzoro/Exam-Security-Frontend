@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import facade from '../../facades/userFacade';
 import threadFacade from '../../facades/threadFacade';
+import { useNavigate } from 'react-router-dom';
 
-const ThreadPost = ({ post }) => {
+const ThreadPost = ({ post, isOP }) => {
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     facade.getUserImage(post.author.id).then(res => {
@@ -13,6 +15,17 @@ const ThreadPost = ({ post }) => {
   }, []);
 
   const onDeletePost = () => {
+    
+    // hacky stuff. since thread content and post content are the same, we disginguish between them here.
+    if(isOP) {
+      threadFacade.deleteThread(post.id).then(res => {
+        navigate("/");
+      }).catch(ex => {
+        console.log(ex.message);
+      });
+      return;
+    }
+
     threadFacade.deletePost(post.id).then(res => {
       if(res.status == 200) {
         window.location.reload();

@@ -34,6 +34,11 @@ function threadFacade() {
 		return fetch(BASE_URL + "/ForumThread", options);
 	}
 
+	const deleteThread = (threadId) => {
+		const options = makeOptions("DELETE", true);
+		return fetch(BASE_URL + "/ForumThread/" + threadId, options);
+	}
+
 	const createPost = (threadId, content) => {
 		const post = {
 			Content: content,
@@ -79,6 +84,7 @@ function threadFacade() {
 		makeOptions,
 		getAllThreads,
 		createThread,
+		deleteThread,
 		createPost,
 		deletePost,
 		getThreadById,

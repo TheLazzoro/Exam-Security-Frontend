@@ -9,7 +9,7 @@ const ThreadPostOP = ({ thread }) => {
       <div>
         <label className='thread-title'>{thread.title}</label>
       </div>
-      <ThreadPost post={thread} /> {/* Yes, thread can be passed to post, since they have the same fields in this case. */}
+      <ThreadPost post={thread} isOP={true} /> {/* Yes, thread can be passed to post, since they have the same fields in this case. */}
     </div>
   )
 }
